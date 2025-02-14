@@ -1,0 +1,22 @@
+CREATE DATABASE First_lesson;
+GO
+
+USE First_lesson;
+GO
+
+DROP TABLE IF EXISTS student;
+GO
+
+CREATE TABLE student(
+	id INT,
+	name VARCHAR(50) NULL,
+	age INT NULL
+);
+GO
+
+ALTER TABLE student
+ALTER COLUMN id INT NOT NULL;
+GO
+
+SELECT * FROM student;
+GO
