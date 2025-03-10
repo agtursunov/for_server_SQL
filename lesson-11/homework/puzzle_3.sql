@@ -3,7 +3,10 @@ GO
 
 SELECT * FROM WorkLog
 GO
-
+/*Create a view vw_MonthlyWorkSummary that calculates:
+EmployeeID, EmployeeName, Department, TotalHoursWorked (SUM of hours per employee).
+Department, TotalHoursDepartment (SUM of all hours per department).
+Department, AvgHoursDepartment (AVG hours worked per department).*/
 CREATE VIEW vw_MonthlyWorkSummary AS
 SELECT t1.EmployeeID, t1.EmployeeName, t1.Department, t1.TotalHoursWorked, 
        t2.TotalHoursDepartment, t2.AvgHoursDepartment
