@@ -14,6 +14,9 @@ ALTER PROCEDURE Sp_and_func_info @db_name_to_query NVARCHAR(100) = null AS
 BEGIN
 	
 	DECLARE @query_task2 NVARCHAR(MAX);
+	/* the main query of task 2 to  retrieves all stored procedure and
+function names along with their schema names and parameters (if they exist),
+including parameter data types and maximum lengths*/
 	SET @query_task2 = N'
 	SELECT
 	s.[name] AS [schema name],
@@ -34,13 +37,13 @@ BEGIN
 		ON Obj.[schema_id] = s.[schema_id]
 	WHERE Obj.type = ''P'' OR Obj.type = ''FN''
 	';
-	IF @db_name_to_query IS NOT NULL
+	IF @db_name_to_query IS NOT NULL --if @db_name_to_query is not null, then execute @query_task2
 	BEGIN
 	EXEC sp_executesql @query_task2;
 	END
 	ELSE
 	BEGIN
-		--SELECT * FROM sys.databases
+		-- else execute @query_task2 for all databases in the SQL Server instance.
 		DECLARE @number_of_databases INT;
 		DECLARE @counter INT = 1;
 		SELECT @number_of_databases = COUNT(1) FROM sys.databases;
@@ -55,7 +58,7 @@ BEGIN
 			)
 		SELECT @name_of_db = name FROM DataBases_CTE
 		WHERE Row_numbers = @counter
-		EXEC sp_executesql @query_task2, N'@db_name_to_query NVARCHAR(100)', @db_name_to_query = @name_of_db;
+		EXEC sp_executesql @query_task2, N'@db_name_to_query NVARCHAR(100)', @db_name_to_query = @name_of_db; -- sp_executesql for security of dynamic query
 		SET @counter = @counter + 1
 		END;
 	END;
